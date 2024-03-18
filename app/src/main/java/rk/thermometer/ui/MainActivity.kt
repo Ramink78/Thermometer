@@ -1,4 +1,4 @@
-package rk.thermometer
+package rk.thermometer.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
