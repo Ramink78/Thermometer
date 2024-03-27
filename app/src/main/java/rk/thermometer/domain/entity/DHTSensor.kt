@@ -1,6 +1,10 @@
 package rk.thermometer.domain.entity
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "dht_sensor")
 data class DHTSensor(
-    val temperature: String,
+    @PrimaryKey val temperature: String,
     val humidity: String
 )
