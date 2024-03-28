@@ -55,6 +55,7 @@ android {
 dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.rtdb)
+    implementation (libs.androidx.hilt.navigation.compose)
     implementation(libs.compoose.nav)
     implementation(libs.material.icon)
     ksp(libs.hilt.compiler)
