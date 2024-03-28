@@ -42,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.10"
     }
     packaging {
         resources {
@@ -52,7 +52,8 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.compoose.nav)
+    implementation(libs.material.icon)
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.room.compiler)
     implementation(libs.hilt.android)

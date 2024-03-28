@@ -1,6 +1,8 @@
 [versions]
 #Dependecies
 compose-bom = "2024.02.02"
+compose-nav="2.7.1"
+material-icon = "1.6.4"
 activity-compose = "1.8.2"
 androidx-core-ktx = "1.12.0"
 androidx-junit = "1.1.5"
@@ -20,6 +22,7 @@ ksp = "1.9.10-1.0.13"
 
 [libraries]
 compoose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+compoose-nav = { module = "androidx.navigation:navigation-compose",version.ref = "compose-nav" }
 ui = { group = "androidx.compose.ui", name = "ui" }
 ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
@@ -27,6 +30,7 @@ ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview
 ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 material3 = { group = "androidx.compose.material3", name = "material3" }
+material-icon = { module = "androidx.compose.material:material-icons-extended", version.ref = "material-icon" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity-compose" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core-ktx" }

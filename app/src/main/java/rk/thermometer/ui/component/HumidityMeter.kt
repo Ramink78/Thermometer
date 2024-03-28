@@ -2,9 +2,14 @@ package rk.thermometer.ui.component
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
@@ -15,6 +20,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.TextMeasurer
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,17 +30,22 @@ import rk.thermometer.ui.theme.ThermometerTheme
 @Composable
 fun HumidityMeter(
     modifier: Modifier = Modifier,
-    humidity: Int = 26
+    humidity: Int = 0
 ) {
-    Box(modifier = modifier) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         val textMeasurer = rememberTextMeasurer()
         Canvas(
             modifier = Modifier
-                .padding(8.dp)
-                .size(300.dp)
+                .width(150.dp)
+                .height(400.dp),
+
         ) {
             drawHumidityOutline(
-                textMeasurer = textMeasurer
+                textMeasurer = textMeasurer,
+                humidity = humidity
             )
 
         }
@@ -43,14 +54,15 @@ fun HumidityMeter(
 }
 
 private fun DrawScope.drawHumidityOutline(
-    textMeasurer: TextMeasurer
+    textMeasurer: TextMeasurer,
+    humidity: Int = 0
 ) {
     val barHeight = size.height
     val division = 2
     val minHumidity = 0
     val maxHumidity = 100
     val barWidth = 40.dp.toPx()
-    val topLeft = Offset(size.width / 2, 0f)
+    val topLeft = Offset(size.width / 2 - barWidth/2, 0f)
     val topRight = topLeft.copy(x = topLeft.x + barWidth)
     val rulerRect = Rect(
         topLeft = topLeft + Offset(y = barWidth / 2, x = 0f),
@@ -59,7 +71,7 @@ private fun DrawScope.drawHumidityOutline(
     val unitCount = (maxHumidity - minHumidity) / division
     val unitHeight = rulerRect.height / unitCount
     drawHumidityFill(
-        humidity = 0,
+        humidity = humidity,
         barWidth = barWidth,
         topLeft = rulerRect.bottomLeft,
     )
@@ -86,7 +98,10 @@ private fun DrawScope.drawHumidityOutline(
             drawText(
                 textMeasurer = textMeasurer,
                 text = "${maxHumidity - unit * division} %",
-                topLeft = start + Offset(x = 8.dp.toPx(), -5.dp.toPx())
+                topLeft = start + Offset(x = 8.dp.toPx(), -5.dp.toPx()),
+                style = TextStyle(
+                    color = Color.LightGray
+                )
             )
         }
     }
@@ -100,9 +115,9 @@ private fun DrawScope.drawHumidityFill(
     topLeft: Offset,
 ) {
     drawRoundRect(
-        color = Color.Blue,
+        color = Color(0xff1982c4),
         topLeft = topLeft + Offset(0f, barWidth / 2),
-        size = Size(width = barWidth, height = -100.dp.toPx()),
+        size = Size(width = barWidth, height = -150.dp.toPx()),
         cornerRadius = CornerRadius(barWidth / 2)
     )
 }

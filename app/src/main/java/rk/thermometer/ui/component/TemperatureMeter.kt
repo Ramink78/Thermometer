@@ -125,7 +125,7 @@ fun DrawScope.drawFillPath(
         outlinePath
     ) {
         drawRect(
-            color = Color.Red,
+            color = Color(0xffe01e37),
             topLeft = top
         )
     }
