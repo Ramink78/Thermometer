@@ -12,11 +12,13 @@ junit = "4.13.2"
 hilt-android = "2.48.1"
 lifecycle-runtime-ktx = "2.7.0"
 room = "2.6.1"
+firebase-bom="32.8.0"
 #Plugins
 androidGradlePlugin = "8.3.0"
 kotlinPlugin = "1.9.22"
 hiltPlugin = "2.48.1"
 ksp = "1.9.10-1.0.13"
+googleServicesVersion = "4.4.1"
 
 
 
@@ -45,6 +47,9 @@ androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt-compiler" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android" }
 junit = { module = "junit:junit", version.ref = "junit" }
+google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServicesVersion" }
+firebase-bom={group="com.google.firebase",name="firebase-bom",version.ref="firebase-bom"}
+firebase-rtdb={group="com.google.firebase",name="firebase-database"}
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinPlugin" }
