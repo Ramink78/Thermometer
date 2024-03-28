@@ -12,18 +12,23 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import rk.thermometer.ui.component.TemperatureMeter
 
 @Composable
 fun TemperatureScreen(modifier: Modifier) {
     val currentTemperature = 25
     val bgShape = RoundedCornerShape(12.dp)
-
+    val viewModel: HomeScreenViewModel = hiltViewModel()
+    val temperature by viewModel.tempFlow.collectAsState()
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.Center,
@@ -42,11 +47,11 @@ fun TemperatureScreen(modifier: Modifier) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 TemperatureMeter(
-                    temperature = currentTemperature
+                    temperature = temperature.toInt()
                 )
                 Text(
                     modifier = Modifier.padding(end = 32.dp),
-                    text = "$currentTemperature°",
+                    text = "$temperature°",
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 42.sp,
                 )
