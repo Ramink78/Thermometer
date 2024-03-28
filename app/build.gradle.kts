@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -52,6 +53,8 @@ android {
 }
 
 dependencies {
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.rtdb)
     implementation(libs.compoose.nav)
     implementation(libs.material.icon)
     ksp(libs.hilt.compiler)
