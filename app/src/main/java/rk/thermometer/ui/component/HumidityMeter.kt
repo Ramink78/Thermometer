@@ -1,14 +1,19 @@
 package rk.thermometer.ui.component
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.EaseInCubic
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
@@ -26,12 +31,32 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import rk.thermometer.ui.theme.ThermometerTheme
+import kotlin.math.roundToInt
 
 @Composable
 fun HumidityMeter(
     modifier: Modifier = Modifier,
-    humidity: Int = 0
+    humidity: Int = 100
 ) {
+    var oldHumidity by remember {
+        mutableIntStateOf(humidity)
+    }
+    SideEffect {
+        oldHumidity = humidity
+    }
+    val animatedTemperature = remember {
+        Animatable(oldHumidity.toFloat())
+    }
+    val humState = animatedTemperature.asState()
+    LaunchedEffect(humidity) {
+        animatedTemperature.animateTo(
+            humidity.toFloat(),
+            animationSpec = tween(
+                durationMillis = 500,
+                easing = EaseInCubic
+            )
+        )
+    }
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -42,10 +67,10 @@ fun HumidityMeter(
                 .width(150.dp)
                 .height(400.dp),
 
-        ) {
+            ) {
             drawHumidityOutline(
                 textMeasurer = textMeasurer,
-                humidity = humidity
+                humidity = humState.value.roundToInt()
             )
 
         }
@@ -73,7 +98,8 @@ private fun DrawScope.drawHumidityOutline(
     drawHumidityFill(
         humidity = humidity,
         barWidth = barWidth,
-        topLeft = rulerRect.bottomLeft,
+        topLeft = rulerRect.bottomLeft + Offset(0f, barWidth / 2),
+        rulerRect = rulerRect
     )
     drawRoundRect(
         topLeft = topLeft,
@@ -113,11 +139,18 @@ private fun DrawScope.drawHumidityFill(
     humidity: Int,
     barWidth: Float,
     topLeft: Offset,
+    rulerRect: Rect,
+    barDivision: Int = 2
 ) {
+    val unitCount = 100 / barDivision
+    val unitHeight = rulerRect.height / unitCount
     drawRoundRect(
         color = Color(0xff1982c4),
-        topLeft = topLeft + Offset(0f, barWidth / 2),
-        size = Size(width = barWidth, height = -150.dp.toPx()),
+        topLeft = topLeft,
+        size = Size(
+            width = barWidth,
+            height = -(unitHeight) * (humidity / barDivision) - rulerRect.topLeft.y
+        ),
         cornerRadius = CornerRadius(barWidth / 2)
     )
 }
