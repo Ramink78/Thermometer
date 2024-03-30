@@ -29,7 +29,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import rk.thermometer.ui.theme.ThermometerTheme
 import kotlin.math.roundToInt
@@ -92,14 +91,14 @@ private fun DrawScope.drawHumidityOutline(
     val topRight = topLeft.copy(x = topLeft.x + barWidth)
     val rulerRect = Rect(
         topLeft = topLeft + Offset(y = barWidth / 2, x = 0f),
-        bottomRight = Offset(y = barHeight - barWidth / 2, x = topRight.x)
+        bottomRight = Offset(y = barHeight - barWidth, x = topRight.x)
     )
     val unitCount = (maxHumidity - minHumidity) / division
     val unitHeight = rulerRect.height / unitCount
     drawHumidityFill(
         humidity = humidity,
         barWidth = barWidth,
-        topLeft = rulerRect.bottomLeft + Offset(0f, barWidth / 2),
+        topLeft = rulerRect.bottomLeft + Offset(0f, barWidth),
         rulerRect = rulerRect
     )
     drawRoundRect(
@@ -145,12 +144,18 @@ private fun DrawScope.drawHumidityFill(
 ) {
     val unitCount = 100 / barDivision
     val unitHeight = rulerRect.height / unitCount
+    val height =
+        when (humidity) {
+            0 -> -barWidth
+            100 ->-(unitHeight) * (humidity / barDivision) - (rulerRect.topLeft.y + barWidth)
+            else -> -(unitHeight) * (humidity / barDivision)-barWidth
+        }
     drawRoundRect(
         color = Color(0xff1982c4),
         topLeft = topLeft,
         size = Size(
             width = barWidth,
-            height = -(unitHeight) * (humidity / barDivision) - rulerRect.topLeft.y
+            height = height
         ),
         cornerRadius = CornerRadius(barWidth / 2)
     )
