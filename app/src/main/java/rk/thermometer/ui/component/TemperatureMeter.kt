@@ -2,9 +2,6 @@ package rk.thermometer.ui.component
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.EaseInCubic
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Column
@@ -81,10 +78,10 @@ fun TemperatureMeter(
             modifier = Modifier
                 .padding(1.dp)
                 .width(150.dp)
-                .height(400.dp)
+                .height(250.dp)
         ) {
-            val bigArcRadius = 40.dp.toPx()
-            val cutoutDegree = 45f
+            val bigArcRadius = 30.dp.toPx()
+            val cutoutDegree = 30f
             val topShapeWidth = cutoutWidth(cutoutDegree, bigArcRadius)
             val smallArcRadius = topShapeWidth / 2
             val columnLeft = (size.width - topShapeWidth) / 2
@@ -193,8 +190,8 @@ private fun DrawScope.drawRuler(
     maxTemp: Int = 80,
     tempDiv: Int = 2,
     verticalLineColor: Color = Color.LightGray,
-    verticalLineWidth: Dp = 2.dp,
-    horizontalLineHeight: Dp = 2.dp,
+    verticalLineWidth: Dp = 1.dp,
+    horizontalLineHeight: Dp = 1.dp,
     horizontalLongLineColor: Color = Color.DarkGray,
     horizontalSmallLineColor: Color = Color.LightGray,
     top: Offset,

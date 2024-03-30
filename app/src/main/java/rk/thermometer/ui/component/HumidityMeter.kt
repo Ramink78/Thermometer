@@ -29,6 +29,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import rk.thermometer.ui.theme.ThermometerTheme
 import kotlin.math.roundToInt
@@ -65,7 +66,7 @@ fun HumidityMeter(
         Canvas(
             modifier = Modifier
                 .width(150.dp)
-                .height(400.dp),
+                .height(250.dp),
 
             ) {
             drawHumidityOutline(
@@ -116,7 +117,7 @@ private fun DrawScope.drawHumidityOutline(
             Color.LightGray,
             start = start,
             end = end,
-            strokeWidth = 2.dp.toPx(),
+            strokeWidth = 1.dp.toPx(),
             cap = StrokeCap.Round
         )
         if (unit % 10 == 0) {
