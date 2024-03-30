@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -20,14 +22,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import rk.thermometer.ui.component.HumidityMeter
+import rk.thermometer.ui.component.HumiditySlider
 import rk.thermometer.ui.temperature.HomeScreenViewModel
 
 @Composable
-fun HumidityScreen(modifier: Modifier) {
-    val viewModel: HomeScreenViewModel = hiltViewModel()
-    val humidity by viewModel.humFlow.collectAsState()
+private fun HumidityScreenStateless(
+    humidity: Int,
+    modifier: Modifier = Modifier
+) {
+    val scrollState = rememberScrollState()
     Column(
-        modifier = modifier,
+        modifier = modifier.verticalScroll(scrollState),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -54,6 +59,29 @@ fun HumidityScreen(modifier: Modifier) {
                 )
             }
         }
+        Card(
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            modifier = Modifier.padding(8.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
+        ) {
+            Text(
+                text = "Humidity Alarm",
+                modifier = Modifier.padding(12.dp),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold
+            )
+            HumiditySlider(onSubmit = {})
+        }
 
     }
+}
+
+@Composable
+fun HumidityScreen(modifier: Modifier) {
+    val viewModel: HomeScreenViewModel = hiltViewModel()
+    val humidity by viewModel.humFlow.collectAsState()
+    HumidityScreenStateless(
+        humidity = humidity.toInt(),
+        modifier = modifier
+    )
 }
