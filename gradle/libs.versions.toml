@@ -14,6 +14,7 @@ hilt-android = "2.48.1"
 lifecycle-runtime-ktx = "2.7.0"
 room = "2.6.1"
 firebase-bom="32.8.0"
+sooner="0.3.5"
 #Plugins
 androidGradlePlugin = "8.3.0"
 kotlinPlugin = "1.9.22"
@@ -24,6 +25,7 @@ googleServicesVersion = "4.4.1"
 
 
 [libraries]
+sonner = { module = "io.github.dokar3:sonner", version.ref = "sooner" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 compoose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
 compoose-nav = { module = "androidx.navigation:navigation-compose",version.ref = "compose-nav" }

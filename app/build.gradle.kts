@@ -53,6 +53,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.sonner)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.rtdb)
     implementation (libs.androidx.hilt.navigation.compose)
