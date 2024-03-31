@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -115,7 +116,7 @@ fun TemperatureMeter(
                 columnRight = columnRight,
                 bottomRect = bottomRect,
                 smallArcRadius = smallArcRadius,
-                tempDiv = 2
+                tempDiv = 5
             )
         }
     }
@@ -190,25 +191,22 @@ private fun DrawScope.drawRuler(
     maxTemp: Int = 80,
     tempDiv: Int = 2,
     verticalLineColor: Color = Color.LightGray,
-    verticalLineWidth: Dp = 1.dp,
-    horizontalLineHeight: Dp = 1.dp,
-    horizontalLongLineColor: Color = Color.DarkGray,
-    horizontalSmallLineColor: Color = Color.LightGray,
+    verticalLineWidth: Dp = 2.dp,
+    horizontalLineHeight: Dp = 2.dp,
+    horizontalLineColor: Color = Color.LightGray,
     top: Offset,
     bottom: Offset,
     textMeasurer: TextMeasurer,
     textColor: Color = Color.LightGray,
-    textSize: TextUnit = 12.sp
+    textSize: TextUnit = 13.sp
 ) {
     val height = (bottom.y - top.y)
     val tempRange = abs(minTemp) + abs(maxTemp)
     val tempUnits = tempRange / tempDiv
     for (step in 0..tempUnits) {
-        val length = if (step % 5 != 0 || step == 0) 4.dp else 8.dp
-        val lineColor =
-            if (step % 5 != 0 || step == 0) horizontalSmallLineColor else horizontalLongLineColor
+        val length = if (step % 5 == 0) 8.dp else 4.dp
         drawLine(
-            color = lineColor,
+            color = horizontalLineColor,
             start = bottom - Offset(x = 0f, y = (step * (height / tempUnits))),
             end = bottom - Offset(
                 x = -length.toPx(), y = (step * (height / tempUnits))
@@ -216,14 +214,17 @@ private fun DrawScope.drawRuler(
             strokeWidth = horizontalLineHeight.toPx(),
             cap = StrokeCap.Round
         )
-        if (step % 15 == 0) drawText(
+        if (step % 5 == 0 || step == tempUnits) drawText(
             textMeasurer = textMeasurer,
             text = ((step * tempDiv) + minTemp).toString(),
             topLeft = bottom - Offset(
-                x = -10.dp.toPx(), y = (step * (height / tempUnits)) + 6.dp.toPx()
+                x = -15.dp.toPx(), y = (step * (height / tempUnits)) + 8.dp.toPx()
             ),
             style = TextStyle(
-                color = textColor, fontSize = textSize, textAlign = TextAlign.Center
+                color = textColor,
+                fontSize = textSize,
+                fontWeight = FontWeight.SemiBold,
+                textAlign = TextAlign.Center
             ),
             size = Size(20.dp.toPx(), 20.dp.toPx())
         )
