@@ -1,4 +1,4 @@
-package rk.thermometer.data.database
+package rk.thermometer.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
