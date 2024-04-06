@@ -48,7 +48,7 @@ fun SuccessToast(
 fun LoadingToast() {
     val state = rememberToasterState()
     state.show(
-        message = stringResource(R.string.loading),
+        message = "Loading...",
         duration = Duration.INFINITE,
         type = ToastType.Info,
         id = loadingToastId

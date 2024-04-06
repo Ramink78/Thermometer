@@ -3,6 +3,7 @@
 compose-bom = "2024.02.02"
 compose-nav="2.7.1"
 hiltNavigationCompose = "1.2.0"
+ktorClientAndroid = "2.3.9"
 material-icon = "1.6.4"
 activity-compose = "1.8.2"
 androidx-core-ktx = "1.12.0"
@@ -12,6 +13,7 @@ hilt-compiler = "2.48.1"
 junit = "4.13.2"
 hilt-android = "2.48.1"
 lifecycle-runtime-ktx = "2.7.0"
+postgrestKt = "2.2.3"
 room = "2.6.1"
 firebase-bom="32.8.0"
 sooner="0.3.5"
@@ -25,6 +27,9 @@ googleServicesVersion = "4.4.1"
 
 
 [libraries]
+ktor-client-android = { module = "io.ktor:ktor-client-cio", version.ref = "ktorClientAndroid" }
+postgrest-kt = { module = "io.github.jan-tennert.supabase:postgrest-kt", version.ref = "postgrestKt" }
+realtime-kt = { module = "io.github.jan-tennert.supabase:realtime-kt", version.ref = "postgrestKt" }
 sonner = { module = "io.github.dokar3:sonner", version.ref = "sooner" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 compoose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
@@ -59,3 +64,4 @@ android-application = { id = "com.android.application", version.ref = "androidGr
 kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinPlugin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltPlugin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinPlugin" }

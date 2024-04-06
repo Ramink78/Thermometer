@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlin.serialization)
     id("com.google.gms.google-services")
 }
 
@@ -53,6 +54,9 @@ android {
 }
 
 dependencies {
+    implementation(libs.realtime.kt)
+    implementation(libs.postgrest.kt)
+    implementation(libs.ktor.client.android)
     implementation(libs.sonner)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.rtdb)
