@@ -30,7 +30,7 @@ import rk.thermometer.ui.theme.ThermometerTheme
 @Composable
 private fun TemperatureScreenStateless(
     modifier: Modifier = Modifier,
-    temperature: Int
+    temperature: Float
 ) {
     val scrollState = rememberScrollState()
     Column(
@@ -85,7 +85,7 @@ fun TemperatureScreen(modifier: Modifier) {
     val viewModel: TemperatureScreenViewModel = hiltViewModel()
     val temperature by viewModel.tempFlow.collectAsState()
     TemperatureScreenStateless(
-        temperature = temperature.value.toFloat().toInt(),
+        temperature = temperature.value.toFloat(),
         modifier = modifier
     )
 
@@ -97,7 +97,7 @@ private fun TemperatureScreenPreview() {
     ThermometerTheme(darkTheme = true) {
         TemperatureScreenStateless(
             modifier = Modifier.fillMaxSize(),
-            temperature = 48
+            temperature = 48f
         )
     }
 }

@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -40,7 +40,6 @@ import androidx.compose.ui.unit.sp
 import rk.thermometer.ui.theme.ThermometerTheme
 import kotlin.math.PI
 import kotlin.math.abs
-import kotlin.math.roundToInt
 import kotlin.math.sin
 
 
@@ -49,21 +48,21 @@ fun TemperatureMeter(
     modifier: Modifier = Modifier,
     minTemp: Int = -40,
     maxTemp: Int = 80,
-    temperature: Int = 0
+    temperature: Float = 0f
 ) {
     var oldTemperature by remember {
-        mutableIntStateOf(temperature)
+        mutableFloatStateOf(temperature)
     }
     SideEffect {
         oldTemperature = temperature
     }
     val animatedTemperature = remember {
-        Animatable(oldTemperature.toFloat())
+        Animatable(oldTemperature)
     }
     val tempState = animatedTemperature.asState()
     LaunchedEffect(temperature) {
         animatedTemperature.animateTo(
-            temperature.toFloat(),
+            temperature,
             animationSpec = tween(
                 durationMillis = 500,
                easing = EaseInCubic
@@ -110,7 +109,7 @@ fun TemperatureMeter(
                 textMeasurer = textMeasurer,
                 minTemp = minTemp,
                 maxTemp = maxTemp,
-                temperature = tempState.value.roundToInt(),
+                temperature = tempState.value,
                 outlinePath = outlinePath,
                 fillPath = fillPath,
                 columnRight = columnRight,
@@ -145,7 +144,7 @@ private fun DrawScope.drawThermometer(
     maxTemp: Int,
     tempDiv: Int,
     minTemp: Int,
-    temperature: Int,
+    temperature: Float,
     columnRight: Float,
     bottomRect: Rect,
     smallArcRadius: Float
@@ -330,7 +329,7 @@ private fun cutoutWidth(arcDegree: Float, radius: Float) =
 private fun TemperatureComponentPreview() {
     ThermometerTheme {
         TemperatureMeter(
-            temperature = 20
+            temperature = 20f
         )
     }
 }
