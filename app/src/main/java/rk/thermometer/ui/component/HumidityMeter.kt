@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -36,21 +36,21 @@ import kotlin.math.roundToInt
 @Composable
 fun HumidityMeter(
     modifier: Modifier = Modifier,
-    humidity: Int = 100
+    humidity: Float = 0f
 ) {
     var oldHumidity by remember {
-        mutableIntStateOf(humidity)
+        mutableFloatStateOf(humidity)
     }
     SideEffect {
         oldHumidity = humidity
     }
     val animatedTemperature = remember {
-        Animatable(oldHumidity.toFloat())
+        Animatable(oldHumidity)
     }
     val humState = animatedTemperature.asState()
     LaunchedEffect(humidity) {
         animatedTemperature.animateTo(
-            humidity.toFloat(),
+            humidity,
             animationSpec = tween(
                 durationMillis = 500,
                 easing = EaseInCubic
@@ -70,7 +70,7 @@ fun HumidityMeter(
             ) {
             drawHumidityOutline(
                 textMeasurer = textMeasurer,
-                humidity = humState.value.roundToInt()
+                humidity = humState.value
             )
 
         }
@@ -80,7 +80,7 @@ fun HumidityMeter(
 
 private fun DrawScope.drawHumidityOutline(
     textMeasurer: TextMeasurer,
-    humidity: Int = 0
+    humidity: Float = 0f
 ) {
     val barHeight = size.height
     val division = 2
@@ -136,7 +136,7 @@ private fun DrawScope.drawHumidityOutline(
 }
 
 private fun DrawScope.drawHumidityFill(
-    humidity: Int,
+    humidity: Float,
     barWidth: Float,
     topLeft: Offset,
     rulerRect: Rect,
@@ -146,8 +146,8 @@ private fun DrawScope.drawHumidityFill(
     val unitHeight = rulerRect.height / unitCount
     val height =
         when (humidity) {
-            0 -> -barWidth
-            100 ->-(unitHeight) * (humidity / barDivision) - (rulerRect.topLeft.y + barWidth)
+            0f -> -barWidth
+            100f ->-(unitHeight) * (humidity / barDivision) - (rulerRect.topLeft.y + barWidth)
             else -> -(unitHeight) * (humidity / barDivision)-barWidth
         }
     drawRoundRect(
