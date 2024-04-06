@@ -2,6 +2,7 @@ package rk.thermometer.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import rk.thermometer.data.database.DHTSensorDao
 import rk.thermometer.domain.entity.DHTSensor
 
 @Database(entities = [DHTSensor::class], version = 1)
