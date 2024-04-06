@@ -7,14 +7,15 @@ import rk.thermometer.data.model.Temperature
 
 @Entity(tableName = "humidity")
 data class LocalHumidity(
-    @PrimaryKey
     val value: String,
+    @PrimaryKey
     val lastUpdate: String
 )
 
 @Entity(tableName = "temperature")
 data class LocalTemperature(
     val value: String,
+    @PrimaryKey
     val lastUpdate: String
 )
 

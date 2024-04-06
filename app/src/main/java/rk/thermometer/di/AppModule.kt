@@ -7,11 +7,13 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import rk.thermometer.data.database.AppDatabase
-import rk.thermometer.data.database.DHTSensorDao
-import rk.thermometer.data.database.LocalDataSourceImpl
+import rk.thermometer.data.local.AppDao
+import rk.thermometer.data.local.AppDatabase
+import rk.thermometer.data.local.LocalDataSourceImpl
+import rk.thermometer.data.network.NetworkDataSourceImpl
 import rk.thermometer.data.repository.HumidityRepositoryImpl
 import rk.thermometer.data.repository.LocalDataSource
+import rk.thermometer.data.repository.NetworkDataSource
 import rk.thermometer.data.repository.TemperatureRepositoryImpl
 import rk.thermometer.domain.humidity.HumidityRepository
 import rk.thermometer.domain.temperature.TemperatureRepository
@@ -31,23 +33,34 @@ object AppModule {
     }
 
     @Provides
-    fun provideDHTSensorDao(appDatabase: AppDatabase): DHTSensorDao {
-        return appDatabase.getDHTSensorDao()
+    fun provideAppDao(appDatabase: AppDatabase): AppDao {
+        return appDatabase.getAppDao()
     }
 
     @Provides
-    fun provideLocalDataSource(dhtSensorDao: DHTSensorDao): LocalDataSource {
+    fun provideLocalDataSource(dhtSensorDao: AppDao): LocalDataSource {
         return LocalDataSourceImpl(dhtSensorDao)
     }
 
     @Provides
-    fun provideTempRepo(localDataSource: LocalDataSource): TemperatureRepository {
-        return TemperatureRepositoryImpl(localDataSource)
+    fun provideNetworkDataSource(): NetworkDataSource {
+        return NetworkDataSourceImpl()
     }
 
     @Provides
-    fun provideHumRepo(localDataSource: LocalDataSource): HumidityRepository {
-        return HumidityRepositoryImpl(localDataSource)
+    fun provideTempRepo(
+        localDataSource: LocalDataSource,
+        networkDataSource: NetworkDataSource
+    ): TemperatureRepository {
+        return TemperatureRepositoryImpl(localDataSource, networkDataSource)
+    }
+
+    @Provides
+    fun provideHumRepo(
+        localDataSource: LocalDataSource,
+        networkDataSource: NetworkDataSource
+    ): HumidityRepository {
+        return HumidityRepositoryImpl(localDataSource, networkDataSource)
     }
 
 }

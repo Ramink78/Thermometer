@@ -82,10 +82,10 @@ private fun TemperatureScreenStateless(
 
 @Composable
 fun TemperatureScreen(modifier: Modifier) {
-    val viewModel: HomeScreenViewModel = hiltViewModel()
+    val viewModel: TemperatureScreenViewModel = hiltViewModel()
     val temperature by viewModel.tempFlow.collectAsState()
     TemperatureScreenStateless(
-        temperature = temperature.toInt(),
+        temperature = temperature.value.toFloat().toInt(),
         modifier = modifier
     )
 

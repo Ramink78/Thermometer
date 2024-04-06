@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import rk.thermometer.ui.component.HumidityMeter
 import rk.thermometer.ui.component.HumiditySlider
-import rk.thermometer.ui.temperature.HomeScreenViewModel
+import rk.thermometer.ui.temperature.TemperatureScreenViewModel
 
 @Composable
 private fun HumidityScreenStateless(
@@ -78,10 +78,10 @@ private fun HumidityScreenStateless(
 
 @Composable
 fun HumidityScreen(modifier: Modifier) {
-    val viewModel: HomeScreenViewModel = hiltViewModel()
+    val viewModel: HumidityScreenViewModel = hiltViewModel()
     val humidity by viewModel.humFlow.collectAsState()
     HumidityScreenStateless(
-        humidity = humidity.toInt(),
+        humidity = humidity.value.toFloat().toInt(),
         modifier = modifier
     )
 }
