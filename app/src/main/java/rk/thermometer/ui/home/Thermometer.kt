@@ -1,7 +1,10 @@
 package rk.thermometer.ui.home
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Thermostat
 import androidx.compose.material.icons.rounded.WaterDrop
@@ -18,10 +21,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import rk.thermometer.R
+import rk.thermometer.ui.component.TopBarStatus
 import rk.thermometer.ui.humidity.HumidityScreen
 import rk.thermometer.ui.temperature.TemperatureScreen
 import rk.thermometer.ui.theme.ThermometerTheme
@@ -49,6 +54,12 @@ fun ThermometerApp() {
                 },
                 currentDest = currentDest
             )
+        },
+        topBar = {
+            TopBarStatus(modifier = Modifier
+                .fillMaxWidth()
+                .systemBarsPadding()
+                .padding(top = 30.dp))
         }
     ) { paddingValues ->
         NavHost(
