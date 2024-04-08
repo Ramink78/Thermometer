@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Thermometer</string>
+    <string name="temperature">Temperature</string>
+    <string name="humidity">Humidity</string>
 </resources>

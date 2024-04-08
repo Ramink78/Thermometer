@@ -1,0 +1,67 @@
+[versions]
+#Dependecies
+compose-bom = "2024.02.02"
+compose-nav="2.7.1"
+hiltNavigationCompose = "1.2.0"
+ktorClientAndroid = "2.3.9"
+material-icon = "1.6.4"
+activity-compose = "1.8.2"
+androidx-core-ktx = "1.12.0"
+androidx-junit = "1.1.5"
+espresso-core = "3.5.1"
+hilt-compiler = "2.48.1"
+junit = "4.13.2"
+hilt-android = "2.48.1"
+lifecycle-runtime-ktx = "2.7.0"
+postgrestKt = "2.2.3"
+room = "2.6.1"
+firebase-bom="32.8.0"
+sooner="0.3.5"
+#Plugins
+androidGradlePlugin = "8.3.0"
+kotlinPlugin = "1.9.22"
+hiltPlugin = "2.48.1"
+ksp = "1.9.10-1.0.13"
+googleServicesVersion = "4.4.1"
+
+
+
+[libraries]
+ktor-client-android = { module = "io.ktor:ktor-client-cio", version.ref = "ktorClientAndroid" }
+postgrest-kt = { module = "io.github.jan-tennert.supabase:postgrest-kt", version.ref = "postgrestKt" }
+realtime-kt = { module = "io.github.jan-tennert.supabase:realtime-kt", version.ref = "postgrestKt" }
+sonner = { module = "io.github.dokar3:sonner", version.ref = "sooner" }
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+compoose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+compoose-nav = { module = "androidx.navigation:navigation-compose",version.ref = "compose-nav" }
+ui = { group = "androidx.compose.ui", name = "ui" }
+ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+material3 = { group = "androidx.compose.material3", name = "material3" }
+material-icon = { module = "androidx.compose.material:material-icons-extended", version.ref = "material-icon" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
+androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity-compose" }
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core-ktx" }
+androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso-core" }
+androidx-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-junit" }
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle-runtime-ktx" }
+androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle-runtime-ktx" }
+androidx-room = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt-compiler" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android" }
+junit = { module = "junit:junit", version.ref = "junit" }
+google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServicesVersion" }
+firebase-bom={group="com.google.firebase",name="firebase-bom",version.ref="firebase-bom"}
+firebase-rtdb={group="com.google.firebase",name="firebase-database"}
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinPlugin" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltPlugin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinPlugin" }
