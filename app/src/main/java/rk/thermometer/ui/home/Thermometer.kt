@@ -55,12 +55,6 @@ fun ThermometerApp() {
                 currentDest = currentDest
             )
         },
-        topBar = {
-            TopBarStatus(modifier = Modifier
-                .fillMaxWidth()
-                .systemBarsPadding()
-                .padding(top = 30.dp))
-        }
     ) { paddingValues ->
         NavHost(
             modifier = Modifier.padding(paddingValues),
