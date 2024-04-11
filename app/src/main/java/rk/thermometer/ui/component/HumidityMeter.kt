@@ -36,7 +36,8 @@ import kotlin.math.roundToInt
 @Composable
 fun HumidityMeter(
     modifier: Modifier = Modifier,
-    humidity: Float = 0f
+    humidity: Float = 0f,
+    outlineColor:Color
 ) {
     var oldHumidity by remember {
         mutableFloatStateOf(humidity)
@@ -70,7 +71,8 @@ fun HumidityMeter(
             ) {
             drawHumidityOutline(
                 textMeasurer = textMeasurer,
-                humidity = humState.value
+                humidity = humState.value,
+                outlineColor=outlineColor
             )
 
         }
@@ -80,7 +82,8 @@ fun HumidityMeter(
 
 private fun DrawScope.drawHumidityOutline(
     textMeasurer: TextMeasurer,
-    humidity: Float = 0f
+    humidity: Float = 0f,
+    outlineColor: Color= Color.DarkGray
 ) {
     val barHeight = size.height
     val division = 2
@@ -103,7 +106,7 @@ private fun DrawScope.drawHumidityOutline(
     )
     drawRoundRect(
         topLeft = topLeft,
-        color = Color.LightGray,
+        color = outlineColor,
         size = Size(40.dp.toPx(), size.height),
         style = Stroke(width = 2.dp.toPx()),
         cornerRadius = CornerRadius(size.width / 2, size.width / 2)
@@ -113,7 +116,7 @@ private fun DrawScope.drawHumidityOutline(
         val start = rulerRect.topRight + Offset(x = 0f, y = unitHeight * unit)
         val end = start.copy(x = start.x - lineLength)
         drawLine(
-            Color.LightGray,
+            outlineColor,
             start = start,
             end = end,
             strokeWidth = 1.dp.toPx(),
@@ -126,7 +129,7 @@ private fun DrawScope.drawHumidityOutline(
                 text = "${maxHumidity - unit * division} %",
                 topLeft = start + Offset(x = 8.dp.toPx(), -5.dp.toPx()),
                 style = TextStyle(
-                    color = Color.LightGray
+                    color = outlineColor
                 )
             )
         }
@@ -165,6 +168,6 @@ private fun DrawScope.drawHumidityFill(
 @Composable
 private fun HumidityStatPreview() {
     ThermometerTheme {
-        HumidityMeter()
+        HumidityMeter(outlineColor = Color.DarkGray)
     }
 }

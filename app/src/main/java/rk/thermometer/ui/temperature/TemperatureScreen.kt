@@ -51,7 +51,8 @@ private fun TemperatureScreenStateless(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 TemperatureMeter(
-                    temperature = temperature
+                    temperature = temperature,
+                    outlineColor = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
                     modifier = Modifier.padding(end = 32.dp),

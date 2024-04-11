@@ -48,7 +48,8 @@ private fun HumidityScreenStateless(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 HumidityMeter(
-                    humidity = humidity
+                    humidity = humidity,
+                    outlineColor = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
                     modifier = Modifier.padding(end = 32.dp),

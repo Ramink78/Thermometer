@@ -48,7 +48,8 @@ fun TemperatureMeter(
     modifier: Modifier = Modifier,
     minTemp: Int = -40,
     maxTemp: Int = 80,
-    temperature: Float = 0f
+    temperature: Float = 0f,
+    outlineColor: Color= Color.LightGray
 ) {
     var oldTemperature by remember {
         mutableFloatStateOf(temperature)
@@ -115,7 +116,8 @@ fun TemperatureMeter(
                 columnRight = columnRight,
                 bottomRect = bottomRect,
                 smallArcRadius = smallArcRadius,
-                tempDiv = 5
+                tempDiv = 5,
+                outlineColor = outlineColor
             )
         }
     }
@@ -147,7 +149,8 @@ private fun DrawScope.drawThermometer(
     temperature: Float,
     columnRight: Float,
     bottomRect: Rect,
-    smallArcRadius: Float
+    smallArcRadius: Float,
+    outlineColor: Color
 ) {
     val topOfMeter = Offset(
         x = columnRight + 8.dp.toPx(),
@@ -170,7 +173,8 @@ private fun DrawScope.drawThermometer(
     )
     drawThermometerPath(
         outlinePath,
-        strokeWidth = 2.dp
+        strokeWidth = 2.dp,
+        outlineColor = outlineColor
     )
     drawRuler(
         top = topOfMeter,
@@ -178,7 +182,9 @@ private fun DrawScope.drawThermometer(
         textMeasurer = textMeasurer,
         minTemp = minTemp,
         maxTemp = maxTemp,
-        tempDiv = tempDiv
+        tempDiv = tempDiv,
+        outlineColor = outlineColor,
+        textColor = outlineColor
     )
 
 
@@ -189,15 +195,14 @@ private fun DrawScope.drawRuler(
     minTemp: Int = -40,
     maxTemp: Int = 80,
     tempDiv: Int = 2,
-    verticalLineColor: Color = Color.LightGray,
     verticalLineWidth: Dp = 2.dp,
     horizontalLineHeight: Dp = 2.dp,
-    horizontalLineColor: Color = Color.LightGray,
     top: Offset,
     bottom: Offset,
     textMeasurer: TextMeasurer,
     textColor: Color = Color.LightGray,
-    textSize: TextUnit = 13.sp
+    textSize: TextUnit = 13.sp,
+    outlineColor: Color
 ) {
     val height = (bottom.y - top.y)
     val tempRange = abs(minTemp) + abs(maxTemp)
@@ -205,7 +210,7 @@ private fun DrawScope.drawRuler(
     for (step in 0..tempUnits) {
         val length = if (step % 5 == 0) 8.dp else 4.dp
         drawLine(
-            color = horizontalLineColor,
+            color = outlineColor,
             start = bottom - Offset(x = 0f, y = (step * (height / tempUnits))),
             end = bottom - Offset(
                 x = -length.toPx(), y = (step * (height / tempUnits))
@@ -230,7 +235,7 @@ private fun DrawScope.drawRuler(
 
     }
     drawLine(
-        color = verticalLineColor,
+        color = outlineColor,
         start = top,
         end = bottom,
         cap = StrokeCap.Round,
@@ -310,10 +315,11 @@ fun DrawScope.thermometerOutlinePath(
 
 fun DrawScope.drawThermometerPath(
     path: Path,
+    outlineColor: Color,
     strokeWidth: Dp = Dp.Hairline
 ) {
     drawPath(
-        path = path, Color.LightGray, style = Stroke(
+        path = path, outlineColor, style = Stroke(
             cap = StrokeCap.Round,
             width = strokeWidth.toPx()
         )
