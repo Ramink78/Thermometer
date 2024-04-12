@@ -1,4 +1,4 @@
-package rk.thermometer.ui.stats
+package rk.thermometer.ui.charts
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface

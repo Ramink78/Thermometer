@@ -25,13 +25,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import rk.thermometer.R
 import rk.thermometer.ui.humidity.HumidityScreen
-import rk.thermometer.ui.stats.StatsScreen
+import rk.thermometer.ui.charts.StatsScreen
 import rk.thermometer.ui.temperature.TemperatureScreen
 import rk.thermometer.ui.theme.ThermometerTheme
 
 const val TEMPERATURE_SCREEN = "Temperature"
 const val HUMIDITY_SCREEN = "Humidity"
-const val STATS_SCREEN = "Stats"
+const val CHARTS_SCREEN = "Charts"
 
 @Composable
 fun ThermometerApp() {
@@ -71,7 +71,7 @@ fun ThermometerApp() {
 
                 },
                 onStatsSelected = {
-                    navController.navigate(STATS_SCREEN) {
+                    navController.navigate(CHARTS_SCREEN) {
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true
                         }
@@ -101,7 +101,7 @@ fun ThermometerApp() {
                     modifier = Modifier.fillMaxSize()
                 )
             }
-            composable(STATS_SCREEN) {
+            composable(CHARTS_SCREEN) {
                 StatsScreen()
             }
 
@@ -145,16 +145,16 @@ fun BottomBar(
             }
         )
         NavigationBarItem(
-            selected = currentDest == STATS_SCREEN,
+            selected = currentDest == CHARTS_SCREEN,
             onClick = onStatsSelected,
             icon = {
                 Icon(
                     imageVector = Icons.Rounded.BarChart,
-                    contentDescription = stringResource(R.string.stats)
+                    contentDescription = stringResource(R.string.charts)
                 )
             },
             label = {
-                Text(text = stringResource(R.string.stats))
+                Text(text = stringResource(R.string.charts))
             }
         )
     }
