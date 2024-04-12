@@ -1,11 +1,9 @@
 package rk.thermometer.ui.home
 
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.BarChart
 import androidx.compose.material.icons.rounded.Thermostat
 import androidx.compose.material.icons.rounded.WaterDrop
 import androidx.compose.material3.Icon
@@ -21,19 +19,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import rk.thermometer.R
-import rk.thermometer.ui.component.TopBarStatus
 import rk.thermometer.ui.humidity.HumidityScreen
+import rk.thermometer.ui.stats.StatsScreen
 import rk.thermometer.ui.temperature.TemperatureScreen
 import rk.thermometer.ui.theme.ThermometerTheme
 
 const val TEMPERATURE_SCREEN = "Temperature"
 const val HUMIDITY_SCREEN = "Humidity"
+const val STATS_SCREEN = "Stats"
 
 @Composable
 fun ThermometerApp() {
@@ -72,6 +70,17 @@ fun ThermometerApp() {
                     currentDest= TEMPERATURE_SCREEN
 
                 },
+                onStatsSelected = {
+                    navController.navigate(STATS_SCREEN) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                    currentDest = TEMPERATURE_SCREEN
+
+                },
                 currentDest = currentDest
             )
         },
@@ -92,6 +101,9 @@ fun ThermometerApp() {
                     modifier = Modifier.fillMaxSize()
                 )
             }
+            composable(STATS_SCREEN) {
+                StatsScreen()
+            }
 
         }
 
@@ -102,6 +114,7 @@ fun ThermometerApp() {
 fun BottomBar(
     onTemperatureSelected: () -> Unit = {},
     onHumiditySelected: () -> Unit = {},
+    onStatsSelected: () -> Unit = {},
     currentDest: String
 ) {
     NavigationBar {
@@ -129,6 +142,19 @@ fun BottomBar(
             },
             label = {
                 Text(text = stringResource(R.string.humidity))
+            }
+        )
+        NavigationBarItem(
+            selected = currentDest == STATS_SCREEN,
+            onClick = onStatsSelected,
+            icon = {
+                Icon(
+                    imageVector = Icons.Rounded.BarChart,
+                    contentDescription = stringResource(R.string.stats)
+                )
+            },
+            label = {
+                Text(text = stringResource(R.string.stats))
             }
         )
     }
