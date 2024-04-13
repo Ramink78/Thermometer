@@ -2,6 +2,7 @@ package rk.thermometer.ui.component
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.EaseInCubic
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Column
@@ -31,7 +32,6 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import rk.thermometer.ui.theme.ThermometerTheme
-import kotlin.math.roundToInt
 
 @Composable
 fun HumidityMeter(
@@ -48,6 +48,18 @@ fun HumidityMeter(
     val animatedTemperature = remember {
         Animatable(oldHumidity)
     }
+    val alpha by animateFloatAsState(
+        targetValue = when (humidity) {
+            in 90f..100f -> 1f
+            in 80f..90f -> .9f
+            in 70f..80f -> .8f
+            in 60f..70f -> .7f
+            in 50f..60f -> .6f
+            in 40f..50f -> .5f
+            in 30f..40f -> .4f
+            else -> .3f
+        }, label = "alphaAnimation"
+    )
     val humState = animatedTemperature.asState()
     LaunchedEffect(humidity) {
         animatedTemperature.animateTo(
@@ -72,7 +84,8 @@ fun HumidityMeter(
             drawHumidityOutline(
                 textMeasurer = textMeasurer,
                 humidity = humState.value,
-                outlineColor=outlineColor
+                outlineColor=outlineColor,
+                fillColor = Color(0xff1982c4).copy(alpha=alpha)
             )
 
         }
@@ -83,7 +96,8 @@ fun HumidityMeter(
 private fun DrawScope.drawHumidityOutline(
     textMeasurer: TextMeasurer,
     humidity: Float = 0f,
-    outlineColor: Color= Color.DarkGray
+    outlineColor: Color= Color.DarkGray,
+    fillColor: Color
 ) {
     val barHeight = size.height
     val division = 2
@@ -102,7 +116,8 @@ private fun DrawScope.drawHumidityOutline(
         humidity = humidity,
         barWidth = barWidth,
         topLeft = rulerRect.bottomLeft + Offset(0f, barWidth),
-        rulerRect = rulerRect
+        rulerRect = rulerRect,
+        color = fillColor
     )
     drawRoundRect(
         topLeft = topLeft,
@@ -143,7 +158,8 @@ private fun DrawScope.drawHumidityFill(
     barWidth: Float,
     topLeft: Offset,
     rulerRect: Rect,
-    barDivision: Int = 2
+    barDivision: Int = 2,
+    color:Color
 ) {
     val unitCount = 100 / barDivision
     val unitHeight = rulerRect.height / unitCount
@@ -154,7 +170,7 @@ private fun DrawScope.drawHumidityFill(
             else -> -(unitHeight) * (humidity / barDivision)-barWidth
         }
     drawRoundRect(
-        color = Color(0xff1982c4),
+        color = color,
         topLeft = topLeft,
         size = Size(
             width = barWidth,
