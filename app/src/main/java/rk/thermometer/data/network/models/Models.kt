@@ -27,6 +27,6 @@ data class NetworkTemperature(
     val fahrenheit: Float
 )
 fun NetworkHumidity.toLocal()=
-    LocalHumidity(value=percent.toString(), lastUpdate = "")
+    LocalHumidity(value = percent.toString(), lastUpdate = createdAt)
 fun NetworkTemperature.toLocal()=
-    LocalTemperature(value = celcius.toString(), lastUpdate = "")
+    LocalTemperature(value = celcius.toString(), lastUpdate = createdAt)
