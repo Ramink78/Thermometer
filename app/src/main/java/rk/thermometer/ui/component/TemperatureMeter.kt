@@ -1,5 +1,6 @@
 package rk.thermometer.ui.component
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.EaseInCubic
 import androidx.compose.animation.core.tween
@@ -61,6 +62,16 @@ fun TemperatureMeter(
         Animatable(oldTemperature)
     }
     val tempState = animatedTemperature.asState()
+    val fillColor by animateColorAsState(
+        targetValue = when (temperature) {
+            in -40f..-20f -> Color(0xff62cff4)
+            in -20f..0f-> Color(0xff2c67f2)
+            in 0f..20f-> Color(0xff2bff88)
+            in 20f..40f-> Color(0xfffc9840)
+            in 40f..60f-> Color(0xfffe5f75)
+            else -> Color(0xffb30938)
+        }, label = "colorAnimation"
+    )
     LaunchedEffect(temperature) {
         animatedTemperature.animateTo(
             temperature,
@@ -117,7 +128,8 @@ fun TemperatureMeter(
                 bottomRect = bottomRect,
                 smallArcRadius = smallArcRadius,
                 tempDiv = 5,
-                outlineColor = outlineColor
+                outlineColor = outlineColor,
+                fillColor =fillColor
             )
         }
     }
@@ -127,13 +139,15 @@ fun TemperatureMeter(
 
 fun DrawScope.drawFillPath(
     outlinePath: Path,
-    top: Offset = Offset.Zero
+    top: Offset = Offset.Zero,
+    color: Color
 ) {
+    // Color(0xffe01e37)
     clipPath(
         outlinePath
     ) {
         drawRect(
-            color = Color(0xffe01e37),
+            color = color,
             topLeft = top
         )
     }
@@ -150,7 +164,8 @@ private fun DrawScope.drawThermometer(
     columnRight: Float,
     bottomRect: Rect,
     smallArcRadius: Float,
-    outlineColor: Color
+    outlineColor: Color,
+    fillColor: Color
 ) {
     val topOfMeter = Offset(
         x = columnRight + 8.dp.toPx(),
@@ -169,7 +184,8 @@ private fun DrawScope.drawThermometer(
         top = Offset(
             0f,
             topOfMeter.y + (unitHeight) * (maxTemp - temperature) / tempDiv
-        )
+        ),
+        color = fillColor
     )
     drawThermometerPath(
         outlinePath,
