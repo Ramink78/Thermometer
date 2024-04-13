@@ -3,10 +3,12 @@ package rk.thermometer.ui.temperature
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
@@ -30,13 +32,12 @@ import rk.thermometer.ui.theme.ThermometerTheme
 @Composable
 private fun TemperatureScreenStateless(
     modifier: Modifier = Modifier,
-    temperature: Float
+    temperature: Float,
+    lastUpdate: String
 ) {
     val scrollState = rememberScrollState()
     Column(
         modifier = modifier.verticalScroll(scrollState),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Card(
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
@@ -46,20 +47,34 @@ private fun TemperatureScreenStateless(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentHeight()
+                    .height(300.dp)
                     .padding(vertical = 20.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 TemperatureMeter(
                     temperature = temperature,
                     outlineColor = MaterialTheme.colorScheme.onSurface
                 )
-                Text(
-                    modifier = Modifier.padding(end = 32.dp),
-                    text = "$temperature°",
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 42.sp,
-                )
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        modifier = Modifier
+                            .padding(end = 32.dp)
+                            .align(Alignment.CenterHorizontally),
+                        text = "$temperature°",
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 42.sp,
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    Text(
+                        modifier =
+                        Modifier
+                            .padding(end = 8.dp)
+                            .align(Alignment.End),
+                        text = "Last checked: $lastUpdate",
+                        fontWeight = FontWeight.Thin,
+                        fontSize = 10.sp
+                    )
+                }
+
             }
         }
         Card(
@@ -70,7 +85,7 @@ private fun TemperatureScreenStateless(
             Text(
                 text = "Temperature Alarm",
                 modifier = Modifier.padding(16.dp),
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.bodySmall,
                 fontWeight = FontWeight.SemiBold
             )
             TemperatureSlider(onSubmit = {})
@@ -87,7 +102,8 @@ fun TemperatureScreen(modifier: Modifier) {
     val temperature by viewModel.tempFlow.collectAsState()
     TemperatureScreenStateless(
         temperature = temperature.value.toFloat(),
-        modifier = modifier
+        modifier = modifier,
+        lastUpdate = temperature.lastUpdate
     )
 
 }
@@ -98,7 +114,8 @@ private fun TemperatureScreenPreview() {
     ThermometerTheme(darkTheme = true) {
         TemperatureScreenStateless(
             modifier = Modifier.fillMaxSize(),
-            temperature = 48f
+            temperature = 48f,
+            lastUpdate = "08:21"
         )
     }
 }

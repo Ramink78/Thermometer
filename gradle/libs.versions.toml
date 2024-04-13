@@ -17,6 +17,7 @@ postgrestKt = "2.2.3"
 room = "2.6.1"
 firebase-bom="32.8.0"
 sooner="0.3.5"
+kotlinx-datetime = "0.6.0-RC.2"
 #Plugins
 androidGradlePlugin = "8.3.0"
 kotlinPlugin = "1.9.22"
@@ -27,6 +28,7 @@ googleServicesVersion = "4.4.1"
 
 
 [libraries]
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 ktor-client-android = { module = "io.ktor:ktor-client-cio", version.ref = "ktorClientAndroid" }
 postgrest-kt = { module = "io.github.jan-tennert.supabase:postgrest-kt", version.ref = "postgrestKt" }
 realtime-kt = { module = "io.github.jan-tennert.supabase:realtime-kt", version.ref = "postgrestKt" }

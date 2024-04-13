@@ -54,6 +54,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.kotlinx.datetime)
     implementation(libs.realtime.kt)
     implementation(libs.postgrest.kt)
     implementation(libs.ktor.client.android)
